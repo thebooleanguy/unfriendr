@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options
 from time import sleep
 import json
 
@@ -7,7 +8,9 @@ from credentials import username, password
 
 class unfriendr:
     def __init__(self):
-        self.driver = webdriver.Firefox()
+        self.options = Options()
+        self.options.add_argument("--headless")
+        self.driver = webdriver.Firefox(options=self.options)
         self.unfollowers = []
         self.fname = "unfollowers.json"
         self.load_from_file()
@@ -83,7 +86,7 @@ class unfriendr:
         sleep(2)
         more_options_btn = self.driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div/div[2]/div/div/div[1]/div[2]/div/div[1]/section/main/div/header/section[2]/div/div/div[2]/div/div[1]/button/div/div[1]')
         more_options_btn.click()
-        sleep(2)
+        sleep(3)
         unfollow_btn = self.driver.find_element(By.XPATH, '/html/body/div[5]/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]/div[1]/div/div/div[1]/div/div')
         unfollow_btn.click()
         sleep(3)
