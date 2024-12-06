@@ -1,6 +1,5 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options
 from time import sleep
 import json
 
@@ -8,7 +7,7 @@ from credentials import username, password
 
 class unfriendr:
     def __init__(self):
-        self.options = Options()
+        self.options = webdriver.FirefoxOptions()
         self.options.add_argument("--headless")
         self.driver = webdriver.Firefox(options=self.options)
         self.unfollowers = []
