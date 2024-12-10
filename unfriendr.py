@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 from time import sleep
 import json
 
@@ -30,7 +31,7 @@ class unfriendr:
     def save_to_file(self):
         try:
             file = open(self.fname, "w")
-            print ("Saving unfollowers list...")
+            # print ("Saving unfollowers list...")
             with file:
                 json.dump(self.unfollowers, file)
         except OSError:
@@ -71,30 +72,39 @@ class unfriendr:
         sleep(8)
 
     def start_unfollowing(self):
-        for i in self.unfollowers[:9]:
+        for i in self.unfollowers[:50]:
             if (self.unfollow_account(i) == 0):
                 self.unfollowers.remove(i)
                 self.save_to_file()
-        sleep(3600)
-        self.start_unfollowing()
+                sleep(30)
+        # sleep(3600)
+        # self.start_unfollowing()
+        self.driver.close()
 
     def unfollow_account(self, username):
         account_url = "https://instagram.com/" + username
-        print(account_url)
+        # print(account_url)
         self.driver.get(account_url)
+        sleep(4)
+        try:
+            more_options_btn = self.driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div/div[2]/div/div/div[1]/div[2]/div/div[1]/section/main/div/header/section[2]/div/div/div[2]/div/div[1]/button/div/div[1]')
+            more_options_btn.click()
+        except NoSuchElementException:
+            print(username + " is not a valid username")
+            return 0
+        sleep(4)
+        try:
+            unfollow_btn = self.driver.find_element(By.XPATH, '/html/body/div[5]/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]/div[1]/div/div/div[1]/div/div')
+            unfollow_btn.click()
+        except NoSuchElementException:
+            print(username + " already unfollowed")
+            return 0
         sleep(2)
-        more_options_btn = self.driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div/div[2]/div/div/div[1]/div[2]/div/div[1]/section/main/div/header/section[2]/div/div/div[2]/div/div[1]/button/div/div[1]')
-        more_options_btn.click()
-        sleep(3)
-        unfollow_btn = self.driver.find_element(By.XPATH, '/html/body/div[5]/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]/div[1]/div/div/div[1]/div/div')
-        unfollow_btn.click()
-        sleep(3)
+        print(username + " Unfollowed ")
         return 0
 
 
-
 bot = unfriendr()
-# print(bot.unfollowers)
 bot.login(username, password)
 bot.start_unfollowing()
-# bot.unfollow_account("cg.125.japon")
+print("Unfollowed ~50 accounts.")
