@@ -5,6 +5,7 @@ from time import sleep
 import json
 
 from credentials import username, password
+from favorites import exceptions
 
 class unfriendr:
     def __init__(self):
@@ -14,6 +15,8 @@ class unfriendr:
         self.unfollowers = []
         self.fname = "unfollowers.json"
         self.load_from_file()
+        # self.unfollowers = set(self.unfollowers) - set(exceptions)
+        self.unfollowers = [user for user in self.unfollowers if user not in exceptions]
 
     def load_from_file(self):
         try:
@@ -71,14 +74,15 @@ class unfriendr:
         log_in_btn.click()
         sleep(8)
 
-    def start_unfollowing(self):
-        for i in self.unfollowers[:50]:
+    def start_unfollowing(self, unfollow_amount):
+        for i in self.unfollowers[:unfollow_amount]:
             if (self.unfollow_account(i) == 0):
                 self.unfollowers.remove(i)
                 self.save_to_file()
                 sleep(30)
         # sleep(3600)
         # self.start_unfollowing()
+        print("Unfollowed ~" + str(unfollow_amount) + " accounts.")
         self.driver.close()
 
     def unfollow_account(self, username):
@@ -106,5 +110,6 @@ class unfriendr:
 
 bot = unfriendr()
 bot.login(username, password)
-bot.start_unfollowing()
-print("Unfollowed ~50 accounts.")
+bot.start_unfollowing(25)
+# print(len(bot.unfollowers))
+# print(len(bot.unfollowers_new))
