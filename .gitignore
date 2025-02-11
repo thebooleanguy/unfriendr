@@ -1,5 +1,7 @@
 # User Exclusions
 credentials.py
+config.py
+favorites.py
 data/
 
 # Byte-compiled / optimized / DLL files
