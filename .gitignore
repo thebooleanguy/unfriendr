@@ -1,8 +1,8 @@
 # User Exclusions
-credentials.py
-config.py
-favorites.py
-data/
+config.py.user
+data/following.html
+data/followers.html
+unfollowers.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

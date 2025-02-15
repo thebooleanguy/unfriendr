@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from time import sleep
 import json
+import os
 
 from config import username, password, unfollow_amount, exceptions
 
@@ -47,9 +48,9 @@ class unfriendr:
         return names
 
     def get_unfollowers(self):
-        self.driver.get('file:///home/xany/Projects/python/unfriendr/data/followers.html')
+        self.driver.get('file://' + os.getcwd() + '/data/followers.html')
         followers_list = self.get_followers()
-        self.driver.get('file:///home/xany/Projects/python/unfriendr/data/following.html')
+        self.driver.get('file://' + os.getcwd() +'/data/following.html')
         following_list = self.get_followers()
 
         self.unfollowers = [user for user in following_list if user not in followers_list]
