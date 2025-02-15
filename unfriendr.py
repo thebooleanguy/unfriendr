@@ -90,19 +90,21 @@ class unfriendr:
         self.driver.get(account_url)
         sleep(4)
         try:
-            # more_options_btn = self.driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div/div[2]/div/div/div[1]/div[2]/div/div[1]/section/main/div/header/section[2]/div/div/div[2]/div/div[1]/button/div/div[1]')
+            sleep(3)
 
             more_options_btn = self.driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[2]/div/div[1]/section/main/div/header/section[2]/div/div/div[2]/div/div[1]/button')
+            sleep(3)
             more_options_btn.click()
+
         except NoSuchElementException:
             print(username + " is not a valid username")
             return 0
         sleep(4)
         try:
-            # unfollow_btn = self.driver.find_element(By.XPATH, '/html/body/div[5]/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]/div[1]/div/div/div[1]/div/div')
+            sleep(3)
+            unfollow_btn = self.driver.find_element(By.XPATH, '/html/body/div[5]/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]/div[1]/div/div/div[1]/div/div')
 
-            unfollow_btn = self.driver.find_element(By.XPATH, '/html/body/div[5]/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]/div[1]')
-
+            sleep(3)
             unfollow_btn.click()
         except NoSuchElementException:
             print(username + " already unfollowed")
